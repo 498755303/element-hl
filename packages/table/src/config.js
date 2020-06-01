@@ -30,7 +30,7 @@ export const cellForced = {
   selection: {
     renderHeader: function(h, { store }) {
       return <el-checkbox
-        disabled={ store.states.data && store.states.data.length === 0 }
+        // disabled={ store.states.data && store.states.data.length === 0 }
         indeterminate={ store.states.selection.length > 0 && !this.isAllSelected }
         nativeOn-click={ this.toggleAllSelection }
         value={ this.isAllSelected } />;

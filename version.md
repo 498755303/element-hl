@@ -1,7 +1,7 @@
 <!--
  * @Description: 版本更新说明
  * @LastEditors: HL
- * @LastEditTime: 2020-05-28 10:59:33
+ * @LastEditTime: 2020-06-01 11:09:06
  -->
 
 ### 2.13.201
@@ -10,3 +10,4 @@
 ### 2.13.201
 1. table模块:增加了一个noCalcScrollX:控制是否计算横向滚动条的高度,用于生成fix header的高度
 2. table模块:增加了一个emptyHidden:用于控制无数据时是否隐藏表体
+3. table模块:修改了表格没有数据顶部全选disabled,但是可以选择的一个bug,增加了固定表头的全选事件
