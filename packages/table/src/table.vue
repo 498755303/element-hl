@@ -661,7 +661,8 @@ export default {
       store: this.store,
       table: this,
       fit: this.fit,
-      showHeader: this.showHeader
+      showHeader: this.showHeader,
+      noCalcScrollX: this.noCalcScrollX
     });
     return {
       layout,

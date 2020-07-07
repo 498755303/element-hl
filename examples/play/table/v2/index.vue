@@ -654,6 +654,7 @@ export default {
     },
     // 当选择项发生变化时会触发该事件
     _selectionChangeHandle(selection) {
+      (selection.length === this.tbData.length) && this.$refs[this.fixTableRef].toggleAllSelection()
       this.tbset.selection && this.$emit('selectChange', selection);
     },
     // 当单元格 hover 进入时会触发该事件

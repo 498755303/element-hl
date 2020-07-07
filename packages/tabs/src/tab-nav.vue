@@ -24,6 +24,10 @@
         type: Function,
         default: noop
       },
+      onTabHover: {
+        type: Function,
+        default: noop
+      },
       onTabRemove: {
         type: Function,
         default: noop
@@ -200,6 +204,7 @@
         editable,
         stretch,
         onTabClick,
+        onTabHover,
         onTabRemove,
         navStyle,
         scrollable,
@@ -248,6 +253,8 @@
             on-focus={ ()=> { setFocus(); }}
             on-blur ={ ()=> { removeFocus(); }}
             on-click={(ev) => { removeFocus(); onTabClick(pane, tabName, ev); }}
+            on-mouseover={(ev) => { removeFocus(); onTabHover(pane, tabName, ev); }}
+            on-mouseout={(ev) => { removeFocus();}}
             on-keydown={(ev) => { if (closable && (ev.keyCode === 46 || ev.keyCode === 8)) { onTabRemove(pane, ev);} }}
           >
             {tabLabelContent}

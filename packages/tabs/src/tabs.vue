@@ -20,7 +20,11 @@
         default: 'top'
       },
       beforeLeave: Function,
-      stretch: Boolean
+      stretch: Boolean,
+      trigger: {
+        type: String,
+        default: 'click'
+      }
     },
 
     provide() {
@@ -70,9 +74,14 @@
         }
       },
       handleTabClick(tab, tabName, event) {
-        if (tab.disabled) return;
+        if (tab.disabled || this.trigger !== 'click') return;
         this.setCurrentName(tabName);
         this.$emit('tab-click', tab, event);
+      },
+      handleTabHover(tab, tabName, event) {
+        if (tab.disabled || this.trigger !== 'hover') return;
+        this.setCurrentName(tabName);
+        this.$emit('tab-hover', tab, event);
       },
       handleTabRemove(pane, ev) {
         if (pane.disabled) return;
@@ -113,6 +122,7 @@
       let {
         type,
         handleTabClick,
+        handleTabHover,
         handleTabRemove,
         handleTabAdd,
         currentName,
@@ -140,6 +150,7 @@
         props: {
           currentName,
           onTabClick: handleTabClick,
+          onTabHover: handleTabHover,
           onTabRemove: handleTabRemove,
           editable,
           type,

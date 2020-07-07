@@ -25,7 +25,6 @@ class TableLayout {
     this.bodyHeight = null; // Table Height - Table Header Height
     this.fixedBodyHeight = null; // Table Height - Table Header Height - Scroll Bar Height
     this.gutterWidth = scrollbarWidth();
-
     for (let name in options) {
       if (options.hasOwnProperty(name)) {
         this[name] = options[name];
@@ -110,7 +109,6 @@ class TableLayout {
       this.bodyHeight = tableHeight - headerHeight - footerHeight + (footerWrapper ? 1 : 0);
     }
     this.fixedBodyHeight = this.scrollX && !this.noCalcScrollX ? (this.bodyHeight - this.gutterWidth) : this.bodyHeight;
-
     const noData = !(this.store.states.data && this.store.states.data.length);
     this.viewportHeight = this.scrollX && !this.noCalcScrollX ? tableHeight - (noData ? 0 : this.gutterWidth) : tableHeight;
 
