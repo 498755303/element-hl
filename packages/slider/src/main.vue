@@ -1,76 +1,76 @@
 <template>
-  <div
-    class="el-slider"
-    :class="{ 'is-vertical': vertical, 'el-slider--with-input': showInput }"
-    role="slider"
-    :aria-valuemin="min"
-    :aria-valuemax="max"
-    :aria-orientation="vertical ? 'vertical': 'horizontal'"
-    :aria-disabled="sliderDisabled"
-  >
-    <el-input-number
-      v-model="firstValue"
-      v-if="showInput && !range"
-      class="el-slider__input"
-      ref="input"
-      @change="emitChange"
-      :step="step"
-      :disabled="sliderDisabled"
-      :controls="showInputControls"
-      :min="min"
-      :max="max"
-      :debounce="debounce"
-      :size="inputSize">
-    </el-input-number>
     <div
-      class="el-slider__runway"
-      :class="{ 'show-input': showInput, 'disabled': sliderDisabled }"
-      :style="runwayStyle"
-      @click="onSliderClick"
-      ref="slider">
-      <div
-        class="el-slider__bar"
-        :style="barStyle">
-      </div>
-      <slider-button
-        :vertical="vertical"
-        v-model="firstValue"
-        :tooltip-class="tooltipClass"
-        ref="button1">
-      </slider-button>
-      <slider-button
-        :vertical="vertical"
-        v-model="secondValue"
-        :tooltip-class="tooltipClass"
-        ref="button2"
-        v-if="range">
-      </slider-button>
-      <div
-        class="el-slider__stop"
-        v-for="(item, key) in stops"
-        :key="key"
-        :style="getStopStyle(item)"
-        v-if="showStops">
-      </div>
-      <template v-if="markList.length > 0">
-        <div>
-          <div
-            v-for="(item, key) in markList"
-            :style="getStopStyle(item.position)"
-            class="el-slider__stop el-slider__marks-stop"
-            :key="key">
-          </div>
+            class="el-slider"
+            :class="{ 'is-vertical': vertical, 'el-slider--with-input': showInput }"
+            role="slider"
+            :aria-valuemin="min"
+            :aria-valuemax="max"
+            :aria-orientation="vertical ? 'vertical': 'horizontal'"
+            :aria-disabled="sliderDisabled"
+    >
+        <el-input-number
+                v-model="firstValue"
+                v-if="showInput && !range"
+                class="el-slider__input"
+                ref="input"
+                @change="emitChange"
+                :step="step"
+                :disabled="sliderDisabled"
+                :controls="showInputControls"
+                :min="min"
+                :max="max"
+                :debounce="debounce"
+                :size="inputSize">
+        </el-input-number>
+        <div
+                class="el-slider__runway"
+                :class="{ 'show-input': showInput, 'disabled': sliderDisabled }"
+                :style="runwayStyle"
+                @click="onSliderClick"
+                ref="slider">
+            <div
+                    class="el-slider__bar"
+                    :style="barStyle">
+            </div>
+            <slider-button
+                    :vertical="vertical"
+                    v-model="firstValue"
+                    :tooltip-class="tooltipClass"
+                    ref="button1">
+            </slider-button>
+            <slider-button
+                    :vertical="vertical"
+                    v-model="secondValue"
+                    :tooltip-class="tooltipClass"
+                    ref="button2"
+                    v-if="range">
+            </slider-button>
+            <div
+                    class="el-slider__stop"
+                    v-for="(item, key) in stops"
+                    :key="key"
+                    :style="getStopStyle(item)"
+                    v-if="showStops">
+            </div>
+            <template v-if="markList.length > 0">
+                <div>
+                    <div
+                            v-for="(item, key) in markList"
+                            :style="getStopStyle(item.position)"
+                            class="el-slider__stop el-slider__marks-stop"
+                            :key="key">
+                    </div>
+                </div>
+                <div class="el-slider__marks">
+                    <slider-marker
+                            :mark="item.mark" v-for="(item, key) in markList"
+                            :key="key"
+                            :style="getStopStyle(item.position)">
+                    </slider-marker>
+                </div>
+            </template>
         </div>
-        <div class="el-slider__marks">
-          <slider-marker
-            :mark="item.mark" v-for="(item, key) in markList"
-            :key="key"
-            :style="getStopStyle(item.position)">
-          </slider-marker>
-        </div>
-      </template>
     </div>
-  </div>
 </template>
 
 <script type="text/babel">
@@ -102,6 +102,9 @@
       step: {
         type: Number,
         default: 1
+      },
+      stepList: {
+        type: Array
       },
       value: {
         type: [Number, Array],
@@ -287,7 +290,7 @@
 
       resetSize() {
         if (this.$refs.slider) {
-          this.sliderSize = this.$refs.slider[`client${ this.vertical ? 'Height' : 'Width' }`];
+          this.sliderSize = this.$refs.slider[`client${this.vertical ? 'Height' : 'Width'}`];
         }
       },
 
@@ -298,32 +301,39 @@
       },
 
       getStopStyle(position) {
-        return this.vertical ? { 'bottom': position + '%' } : { 'left': position + '%' };
+        return this.vertical ? {'bottom': position + '%'} : {'left': position + '%'};
       }
     },
 
     computed: {
       stops() {
         if (!this.showStops || this.min > this.max) return [];
-        if (this.step === 0) {
-          process.env.NODE_ENV !== 'production' &&
-          console.warn('[Element Warn][Slider]step should not be 0.');
-          return [];
-        }
-        const stopCount = (this.max - this.min) / this.step;
-        const stepWidth = 100 * this.step / (this.max - this.min);
         const result = [];
-        for (let i = 1; i < stopCount; i++) {
-          result.push(i * stepWidth);
-        }
-        if (this.range) {
-          return result.filter(step => {
-            return step < 100 * (this.minValue - this.min) / (this.max - this.min) ||
-              step > 100 * (this.maxValue - this.min) / (this.max - this.min);
+        if (this.stepList && this.stepList.length > 0) {
+          this.stepList.forEach(item => {
+            result.push(item / (this.max - this.min) * 100);
           });
         } else {
-          return result.filter(step => step > 100 * (this.firstValue - this.min) / (this.max - this.min));
+          if (this.step === 0) {
+            process.env.NODE_ENV !== 'production' &&
+            console.warn('[Element Warn][Slider]step should not be 0.');
+            return [];
+          }
+          const stopCount = (this.max - this.min) / this.step;
+          const stepWidth = 100 * this.step / (this.max - this.min);
+          for (let i = 1; i < stopCount; i++) {
+            result.push(i * stepWidth);
+          }
+          if (this.range) {
+            return result.filter(step => {
+              return step < 100 * (this.minValue - this.min) / (this.max - this.min) ||
+                step > 100 * (this.maxValue - this.min) / (this.max - this.min);
+            });
+          } else {
+            return result.filter(step => step > 100 * (this.firstValue - this.min) / (this.max - this.min));
+          }
         }
+        return result;
       },
 
       markList() {
@@ -352,13 +362,13 @@
 
       barSize() {
         return this.range
-          ? `${ 100 * (this.maxValue - this.minValue) / (this.max - this.min) }%`
-          : `${ 100 * (this.firstValue - this.min) / (this.max - this.min) }%`;
+          ? `${100 * (this.maxValue - this.minValue) / (this.max - this.min)}%`
+          : `${100 * (this.firstValue - this.min) / (this.max - this.min)}%`;
       },
 
       barStart() {
         return this.range
-          ? `${ 100 * (this.minValue - this.min) / (this.max - this.min) }%`
+          ? `${100 * (this.minValue - this.min) / (this.max - this.min)}%`
           : '0%';
       },
 
@@ -371,7 +381,7 @@
       },
 
       runwayStyle() {
-        return this.vertical ? { height: this.height } : {};
+        return this.vertical ? {height: this.height} : {};
       },
 
       barStyle() {

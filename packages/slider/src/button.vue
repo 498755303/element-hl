@@ -1,37 +1,40 @@
 <template>
-  <div
-    class="el-slider__button-wrapper"
-    @mouseenter="handleMouseEnter"
-    @mouseleave="handleMouseLeave"
-    @mousedown="onButtonDown"
-    @touchstart="onButtonDown"
-    :class="{ 'hover': hovering, 'dragging': dragging }"
-    :style="wrapperStyle"
-    ref="button"
-    tabindex="0"
-    @focus="handleMouseEnter"
-    @blur="handleMouseLeave"
-    @keydown.left="onLeftKeyDown"
-    @keydown.right="onRightKeyDown"
-    @keydown.down.prevent="onLeftKeyDown"
-    @keydown.up.prevent="onRightKeyDown"
-  >
-    <el-tooltip
-      placement="top"
-      ref="tooltip"
-      :popper-class="tooltipClass"
-      :disabled="!showTooltip">
-      <span slot="content">{{ formatValue }}</span>
-      <div class="el-slider__button" :class="{ 'hover': hovering, 'dragging': dragging }"></div>
-    </el-tooltip>
-  </div>
+    <div
+            class="el-slider__button-wrapper"
+            @mouseenter="handleMouseEnter"
+            @mouseleave="handleMouseLeave"
+            @mousedown="onButtonDown"
+            @touchstart="onButtonDown"
+            :class="{ 'hover': hovering, 'dragging': dragging }"
+            :style="wrapperStyle"
+            ref="button"
+            tabindex="0"
+            @focus="handleMouseEnter"
+            @blur="handleMouseLeave"
+            @keydown.left="onLeftKeyDown"
+            @keydown.right="onRightKeyDown"
+            @keydown.down.prevent="onLeftKeyDown"
+            @keydown.up.prevent="onRightKeyDown"
+    >
+        <el-tooltip
+                placement="top"
+                ref="tooltip"
+                :popper-class="tooltipClass"
+                :disabled="!showTooltip">
+            <span slot="content">{{ formatValue }}</span>
+            <div class="el-slider__button" :class="{ 'hover': hovering, 'dragging': dragging }"></div>
+        </el-tooltip>
+    </div>
 </template>
 
 <script>
   import ElTooltip from 'element-ui/packages/tooltip';
+  import stepListMixin from '../mixin/step-list.mixin';
 
   export default {
     name: 'ElSliderButton',
+
+    mixins: [stepListMixin],
 
     components: {
       ElTooltip
@@ -90,7 +93,7 @@
       },
 
       currentPosition() {
-        return `${ (this.value - this.min) / (this.max - this.min) * 100 }%`;
+        return `${(this.value - this.min) / (this.max - this.min) * 100}%`;
       },
 
       enableFormat() {
@@ -102,7 +105,7 @@
       },
 
       wrapperStyle() {
-        return this.vertical ? { bottom: this.currentPosition } : { left: this.currentPosition };
+        return this.vertical ? {bottom: this.currentPosition} : {left: this.currentPosition};
       }
     },
 
@@ -214,6 +217,22 @@
       },
 
       setPosition(newPosition) {
+        let value = this._setPosition(newPosition);
+        if (this.stepList && this.stepList.length > 0) {
+          const index = this.getIndex(value, this.stepList);
+          value = this.stepList[index];
+        }
+        this.$emit('input', value);
+        this.$nextTick(() => {
+          this.displayTooltip();
+          this.$refs.tooltip && this.$refs.tooltip.updatePopper();
+        });
+        if (!this.dragging && this.value !== this.oldValue) {
+          this.oldValue = this.value;
+        }
+      },
+
+      _setPosition(newPosition) {
         if (newPosition === null || isNaN(newPosition)) return;
         if (newPosition < 0) {
           newPosition = 0;
@@ -224,14 +243,7 @@
         const steps = Math.round(newPosition / lengthPerStep);
         let value = steps * lengthPerStep * (this.max - this.min) * 0.01 + this.min;
         value = parseFloat(value.toFixed(this.precision));
-        this.$emit('input', value);
-        this.$nextTick(() => {
-          this.displayTooltip();
-          this.$refs.tooltip && this.$refs.tooltip.updatePopper();
-        });
-        if (!this.dragging && this.value !== this.oldValue) {
-          this.oldValue = this.value;
-        }
+        return value;
       }
     }
   };

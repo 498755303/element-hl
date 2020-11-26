@@ -208,25 +208,21 @@ import TableBody from './table-body';
 import TableHeader from './table-header';
 import TableFooter from './table-footer';
 import { parseHeight } from './util';
+import scrollMixin from '../mixin/table-body-scroll.mixin';
 
 let tableIdSeed = 1;
 
 export default {
   name: 'ElTable',
 
-  mixins: [Locale, Migrating],
+  mixins: [Locale, Migrating, scrollMixin],
 
   directives: {
     Mousewheel
   },
 
   props: {
-    data: {
-      type: Array,
-      default: function() {
-        return [];
-      }
-    },
+    data: Array,
 
     size: String,
 

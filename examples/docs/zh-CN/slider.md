@@ -208,6 +208,42 @@
 ```
 :::
 
+### 自定义散点
+
+:::demo 设置 `stepList` 属性可以自定义散点
+```html
+<template>
+  <div class="block">
+    <el-slider
+      v-model="value"
+      :showStops="true"
+      :min="0"
+      :max="11000"
+      :stepList="stepList"
+      :marks="marks">
+    </el-slider>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        value: [0, 500],
+        stepList: [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000],
+        marks: {
+          0: '0',
+          2000: '2000元',
+          5000: '5000元',
+          10000: '1万元'
+        }
+      }
+    }
+  }
+</script>
+```
+:::
+
 ### Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
@@ -216,6 +252,7 @@
 | max | 最大值 | number | — | 100 |
 | disabled | 是否禁用 | boolean | — | false |
 | step | 步长 | number | — | 1 |
+| stepList | 散点 | number[] | — | - |
 | show-input | 是否显示输入框，仅在非范围选择时有效 | boolean | — | false |
 | show-input-controls | 在显示输入框的情况下，是否显示输入框的控制按钮 | boolean | — | true |
 | input-size | 输入框的尺寸 | string | large / medium / small / mini | small |

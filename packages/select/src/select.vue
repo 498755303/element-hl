@@ -9,7 +9,7 @@
       v-if="multiple"
       ref="tags"
       :style="{ 'max-width': inputWidth - 32 + 'px', width: '100%' }">
-      <span v-if="collapseTags && selected.length">
+      <span v-if="collapseTags && selected.length && multipleShowTag">
         <el-tag
           :closable="!selectDisabled"
           :size="collapseTagSize"
@@ -28,7 +28,7 @@
           <span class="el-select__tags-text">+ {{ selected.length - 1 }}</span>
         </el-tag>
       </span>
-      <transition-group @after-leave="resetInputHeight" v-if="!collapseTags">
+      <transition-group @after-leave="resetInputHeight" v-if="!collapseTags && multipleShowTag">
         <el-tag
           v-for="item in selected"
           :key="getValueKey(item)"
@@ -300,6 +300,10 @@
       },
       collapseTags: Boolean,
       popperAppendToBody: {
+        type: Boolean,
+        default: true
+      },
+      multipleShowTag: {
         type: Boolean,
         default: true
       }
@@ -859,6 +863,7 @@
     },
 
     mounted() {
+      console.log(this.multipleShowTag, this.multiple);
       if (this.multiple && Array.isArray(this.value) && this.value.length > 0) {
         this.currentPlaceholder = '';
       }

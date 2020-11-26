@@ -185,7 +185,7 @@
 
 适用性较广的基础多选，用 Tag 展示已选项
 
-:::demo 为`el-select`设置`multiple`属性即可启用多选，此时`v-model`的值为当前选中值所组成的数组。默认情况下选中值会以 Tag 的形式展现，你也可以设置`collapse-tags`属性将它们合并为一段文字。
+:::demo 为`el-select`设置`multiple`属性即可启用多选，此时`v-model`的值为当前选中值所组成的数组。默认情况下选中值会以 Tag 的形式展现，你也可以设置`collapse-tags`属性将它们合并为一段文字,也可以设置`multipleShowTag`属性控制标签是否展示。
 ```html
 <template>
   <el-select v-model="value1" multiple placeholder="请选择">
@@ -210,6 +210,16 @@
       :value="item.value">
     </el-option>
   </el-select>
+
+   <el-select v-model="value1" multiple placeholder="请选择" :multipleShowTag="false">
+       <el-option
+         v-for="item in options"
+         :key="item.value"
+         :label="item.label"
+         :value="item.value">
+       </el-option>
+     </el-select>
+
 </template>
 
 <script>

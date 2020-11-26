@@ -1,7 +1,7 @@
 {
-  "name": "element-ui",
-  "version": "2.13.203",
-  "description": "A Component Library for Vue.js.",
+  "name": "ele-pro-hl",
+  "version": "1.0.1",
+  "description": "A Component Library for Vue.js.Base on element-ui 2.13.2",
   "main": "lib/element-ui.common.js",
   "files": [
     "lib",
@@ -45,9 +45,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:ElemeFE/element.git"
+    "url": "https://github.com/498755303/element-hl.git"
   },
-  "homepage": "http://element.eleme.io",
+  "homepage": "http://doc-ele.betterhl.com",
   "keywords": [
     "eleme",
     "vue",
@@ -55,7 +55,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ElemeFE/element/issues"
+    "url": "https://github.com/498755303/element-hl/issues"
   },
   "unpkg": "lib/index.js",
   "style": "lib/theme-chalk/index.css",
@@ -121,7 +121,7 @@
     "markdown-it-container": "^2.0.0",
     "mini-css-extract-plugin": "^0.4.1",
     "mocha": "^6.0.2",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.14.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss": "^7.0.14",
     "progress-bar-webpack-plugin": "^1.11.0",
@@ -144,5 +144,5 @@
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.1.11",
     "webpack-node-externals": "^1.7.2"
-  }  
+  }
 }

@@ -192,6 +192,11 @@ export default {
     doubleCodeable: {
       type: Boolean,
       default: false
+    },
+    doubleCode: {
+      default: ()=>{
+        return new RegExp('[^\x00-\xff]', 'g');
+      }
     }
   },
 

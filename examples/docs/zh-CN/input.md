@@ -674,6 +674,31 @@ export default {
 ```
 :::
 
+### 输入长度限制(特殊字符 两字符算1字节)
+
+:::demo  `doubleCodeable` 用来启用字符串特殊字符两字符算一字节，`doubleCode`用来控制匹配哪些字符算双字节,启用后默认中文算双字节,其余单字节。
+```html
+<el-input placeholder="请输入名称"
+                  maxlength="50"
+                  :doubleCodeable="true"
+                  show-word-limit                  
+                  v-model.trim="name"
+                  type="text">
+      </el-input>
+
+<script>
+export default {
+  data() {
+    return {
+       name:""
+    }
+  }
+}
+</script>
+```
+:::
+
+
 ### Input Attributes
 
 | 参数          | 说明            | 类型            | 可选值                 | 默认值   |
@@ -705,6 +730,8 @@ export default {
 | label | 输入框关联的label文字 | string | — | — |
 | tabindex | 输入框的tabindex | string | - | - |
 | validate-event | 输入时是否触发表单的校验 | boolean | - | true |
+| doubleCodeable`新增` | 是否启用特殊字符两个算一字节 | boolean | - |false |
+| doubleCode`新增`|  | 特殊字符(需支持String.prototype.match) | - | new RegExp('[^\x00-\xff]', 'g') |
 
 ### Input Slots
 | name | 说明 |
