@@ -36,17 +36,13 @@
         @selection-change="handleSelectionChange">
       <el-table-column
           type="selection"
-          width="55">
-        <template slot="header" slot-scope="scope">
-          <el-input
-              v-model="search"
-              size="mini"
-              placeholder="输入关键字搜索"/>
-        </template>
+          width="55"
+          >
       </el-table-column>
       <el-table-column
           prop="label"
           label="地址"
+          :render-header="renderHeader"
           show-overflow-tooltip>
       </el-table-column>
     </el-table>
@@ -87,7 +83,28 @@ export default {
     },
     handleSelectionChange(v) {
       console.log(v);
-    }
+    },
+    renderHeader(h, a) {
+      return [
+        h(
+            'el-button',
+            {
+              props: {
+                size: 'mini'
+              },
+              style: {
+                marginLeft: '10px'
+              },
+              on: {
+                click: () => {
+                  console.log(a);
+                }
+              }
+            },
+            "批量配置"
+        ),
+      ];
+    },
   },
   components: {
     // adeskTab

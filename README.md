@@ -34,6 +34,6 @@ element ui team
 ### select
 1. 支持select多选隐藏标签
 
-### 1.0.2
+### 1.0.3
 ### table
 1. 去掉对selection列自定义表头的限制
