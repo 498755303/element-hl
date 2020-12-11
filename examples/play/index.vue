@@ -27,25 +27,7 @@
         </div>
       </el-option>
     </el-select>
-
-    <el-table
-        ref="multipleTable"
-        :data="options"
-        tooltip-effect="dark"
-        style="width: 100%"
-        @selection-change="handleSelectionChange">
-      <el-table-column
-          type="selection"
-          width="55"
-          >
-      </el-table-column>
-      <el-table-column
-          prop="label"
-          label="地址"
-          :render-header="renderHeader"
-          show-overflow-tooltip>
-      </el-table-column>
-    </el-table>
+    <el-cascader :props="props" placeholder="批量修改" :fixedValue="true" @change="_change"></el-cascader>
   </div>
 </template>
 <script>
@@ -57,6 +39,7 @@ import adeskDialog from './el-dialog/index.vue';
 
 export default {
   data() {
+    let id = 0;
     return {
       value1: [],
       options: [{
@@ -74,10 +57,29 @@ export default {
       }, {
         value: '选项5',
         label: '北京烤鸭'
-      }]
+      }],
+      props: {
+        lazy: true,
+        lazyLoad(node, resolve) {
+          const {level} = node;
+          setTimeout(() => {
+            const nodes = Array.from({length: level + 1})
+                .map(item => ({
+                  value: ++id,
+                  label: `选项${id}`,
+                  leaf: level >= 2
+                }));
+            // 通过调用resolve将子节点数据返回，通知组件数据加载完成
+            resolve(nodes);
+          }, 1000);
+        }
+      }
     };
   },
   methods: {
+    _change(v) {
+      console.log(v);
+    },
     openDialog() {
       this.$refs.test.openDialog();
     },
@@ -101,10 +103,10 @@ export default {
                 }
               }
             },
-            "批量配置"
-        ),
+            '批量配置'
+        )
       ];
-    },
+    }
   },
   components: {
     // adeskTab

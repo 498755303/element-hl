@@ -37,3 +37,6 @@ element ui team
 ### 1.0.3
 ### table
 1. 去掉对selection列自定义表头的限制
+### 1.0.4
+### cascader
+1. 增加一个属性fixedValue,使展示值可以固定不变

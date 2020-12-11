@@ -1,6 +1,6 @@
 {
   "name": "ele-pro-hl",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Component Library for Vue.js.Base on element-ui 2.13.2",
   "main": "lib/element-ui.common.js",
   "files": [

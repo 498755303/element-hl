@@ -14,7 +14,7 @@
 
     <el-input
       ref="input"
-      v-model="multiple ? presentText : inputValue"
+      v-model="fixedValue ? placeholder : multiple ? presentText : inputValue"
       :size="realSize"
       :placeholder="placeholder"
       :readonly="readonly"
@@ -225,7 +225,8 @@ export default {
       type: Function,
       default: () => (() => {})
     },
-    popperClass: String
+    popperClass: String,
+    fixedValue: Boolean
   },
 
   data() {
