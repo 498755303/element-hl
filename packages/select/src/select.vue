@@ -863,7 +863,6 @@
     },
 
     mounted() {
-      console.log(this.multipleShowTag, this.multiple);
       if (this.multiple && Array.isArray(this.value) && this.value.length > 0) {
         this.currentPlaceholder = '';
       }

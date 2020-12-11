@@ -27,6 +27,29 @@
         </div>
       </el-option>
     </el-select>
+
+    <el-table
+        ref="multipleTable"
+        :data="options"
+        tooltip-effect="dark"
+        style="width: 100%"
+        @selection-change="handleSelectionChange">
+      <el-table-column
+          type="selection"
+          width="55">
+        <template slot="header" slot-scope="scope">
+          <el-input
+              v-model="search"
+              size="mini"
+              placeholder="输入关键字搜索"/>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="label"
+          label="地址"
+          show-overflow-tooltip>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 <script>
@@ -61,6 +84,9 @@ export default {
   methods: {
     openDialog() {
       this.$refs.test.openDialog();
+    },
+    handleSelectionChange(v) {
+      console.log(v);
     }
   },
   components: {

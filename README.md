@@ -29,3 +29,11 @@ element ui team
 1. slider模块:增加了一个对stepList的支持,支持传入一个数组作为散点
 ### input
 1. input模块:增加了一个doubleCodeable和doubleCode的支持
+
+### 1.0.1
+### select
+1. 支持select多选隐藏标签
+
+### 1.0.2
+### table
+1. 去掉对selection列自定义表头的限制
