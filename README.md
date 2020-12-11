@@ -40,3 +40,6 @@ element ui team
 ### 1.0.4
 ### cascader
 1. 增加一个属性fixedValue,使展示值可以固定不变
+### 1.0.5
+### cascader
+1. 增加一个属性perFecth,控制是否每次点击都重新加载

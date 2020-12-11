@@ -56,13 +56,13 @@
         const { multiple, checkStrictly } = config;
 
         if (!checkStrictly && isDisabled || node.loading) return;
-
         if (config.lazy && !node.loaded) {
           panel.lazyLoad(node, () => {
             // do not use cached leaf value here, invoke this.isLeaf to get new value.
             const { isLeaf } = this;
 
             if (!isLeaf) this.handleExpand();
+            config.perFetch && (node.loaded = false);
             if (multiple) {
               // if leaf sync checked state, else clear checked state
               const checked = isLeaf ? node.checked : false;

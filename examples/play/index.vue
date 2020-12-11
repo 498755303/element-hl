@@ -62,17 +62,29 @@ export default {
         lazy: true,
         lazyLoad(node, resolve) {
           const {level} = node;
-          setTimeout(() => {
-            const nodes = Array.from({length: level + 1})
-                .map(item => ({
-                  value: ++id,
-                  label: `选项${id}`,
-                  leaf: level >= 2
-                }));
-            // 通过调用resolve将子节点数据返回，通知组件数据加载完成
-            resolve(nodes);
-          }, 1000);
-        }
+          const tmp = {
+            value: 1,
+            label: `选项1`,
+            leaf: false
+          };
+          if (level === 0) {
+            resolve([tmp]);
+          } else {
+            resolve([
+              {
+                value: 2,
+                label: `选项2`,
+                leaf: true
+              },
+              {
+                value: 3,
+                label: `选项3`,
+                leaf: true
+              }
+            ]);
+          }
+        },
+        perFetch: true
       }
     };
   },

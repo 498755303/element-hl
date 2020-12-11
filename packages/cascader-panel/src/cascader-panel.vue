@@ -41,7 +41,8 @@ const DefaultProps = {
   children: 'children',
   leaf: 'leaf',
   disabled: 'disabled',
-  hoverThreshold: 500
+  hoverThreshold: 500,
+  perFetch: false
 };
 
 const isLeaf = el => !el.getAttribute('aria-owns');
@@ -164,9 +165,13 @@ export default {
 
   methods: {
     initStore() {
-      const { config, options } = this;
-      if (config.lazy && isEmpty(options)) {
-        this.lazyLoad();
+      const { config, options} = this;
+      if (config.lazy) {
+        if (config.perFetch) {
+          this.lazyLoad();
+        } else {
+          isEmpty(options) && this.lazyLoad();
+        }
       } else {
         this.store = new Store(options, config);
         this.menus = [this.store.getNodes()];
@@ -296,6 +301,7 @@ export default {
       node.loading = true;
       const resolve = dataList => {
         const parent = node.root ? null : node;
+        parent && config.perFetch && (parent.children = []);
         dataList && dataList.length && this.store.appendNodes(dataList, parent);
         node.loading = false;
         node.loaded = true;
